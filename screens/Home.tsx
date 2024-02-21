@@ -1,12 +1,18 @@
+import { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { Text, View } from 'react-native';
-import tw from 'twrnc';
+import { TextInput, View } from 'react-native';
 
 export default function Home() {
-  return (
-    <View style={tw`flex-1 bg-white items-center justify-center`}>
-      <Text style={tw`text-xl font-bold bg-blue-100`}>Open up App.tsx to start working on your app! AAAA</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+    const [text, onChangeText] = useState('Digitar nome da serie ou filme');
+
+    return (
+        <View className="flex-1 bg-white items-center">
+            <TextInput
+                className="text-xl font-bold bg-amber-100"
+                onChangeText={onChangeText}
+                value={text}
+            />
+            <StatusBar style="auto" />
+        </View>
+    );
 }

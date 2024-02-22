@@ -12,14 +12,17 @@ export default function Home() {
     const [dataSerie, setDataSerie] = useState([]);
     const [dataSearch, setDataSearch] = useState([]);
     const [isSearching, setIsSearching] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         const fetchResult = async () => {
             try {
+                setLoading(true);
                 const resultMovie = await fetchPopularMovies();
                 const resultSerie = await fetchPopularSeries();
                 setDataMovie(resultMovie);
                 setDataSerie(resultSerie);
+                setLoading(false);
             } catch (error) {
                 console.log(error);
             }
@@ -53,7 +56,7 @@ export default function Home() {
                     </TouchableOpacity>
                 </View>
 
-                {!isSearching ? (<HomeStart movie={dataMovie} serie={dataSerie} />) : (<HomeSearch data={dataSearch} />)}
+                {loading ? <></> : !isSearching ? (<HomeStart movie={dataMovie} serie={dataSerie} />) : (<HomeSearch data={dataSearch} />)}
                 
             </ScrollView>
             <StatusBar style="auto" />

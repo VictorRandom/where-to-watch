@@ -1,11 +1,41 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { TouchableOpacity, ScrollView, Text, TextInput, View } from 'react-native';
+import { fetchFilterMovie, fetchPopularMovies } from '../services/movies';
+import { fetchPopularSeries } from '../services/series';
+import HomeStart from './HomeStart';
+import HomeSearch from './HomeSearch';
 
 export default function Home() {
     const [text, setText] = useState('');
+    const [dataMovie, setDataMovie] = useState([]);
+    const [dataSerie, setDataSerie] = useState([]);
+    const [dataSearch, setDataSearch] = useState([]);
+    const [isSearching, setIsSearching] = useState(false);
 
-    console.log(text)
+    useEffect(() => {
+        const fetchResult = async () => {
+            try {
+                const resultMovie = await fetchPopularMovies();
+                const resultSerie = await fetchPopularSeries();
+                setDataMovie(resultMovie);
+                setDataSerie(resultSerie);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        fetchResult();
+    }, [])
+
+    const fetchData = async () => {
+        try {
+            const result = await fetchFilterMovie(text);
+            setDataSearch(result);
+            setIsSearching(true);
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     return (
         <View className="flex-1 bg-gray-900">
@@ -18,30 +48,13 @@ export default function Home() {
                         placeholder={'Digitar nome da serie ou filme'}
                         placeholderTextColor="#fff"
                     />
-                    <TouchableOpacity className="bg-blue-900 w-1/5 rounded justify-center" onPress={() => console.log('teste')}>
+                    <TouchableOpacity className="bg-blue-900 w-1/5 rounded justify-center" onPress={() => fetchData()}>
                         <Text className="text-white text-center">Buscar</Text>
                     </TouchableOpacity>
                 </View>
-                <View className="mt-3 p-5">
-                    <Text className="text-white">
-                        Filmes populares
-                    </Text>
-                    <View className="flex-row gap-2 w-full mt-2">
-                        <View className="bg-orange-400 w-20 h-40 rounded" />
-                        <View className="bg-orange-400 w-20 h-40 rounded" />
-                        <View className="bg-orange-400 w-20 h-40 rounded" />
-                    </View>
-                </View>
-                <View className="mt-3 p-5">
-                    <Text className="text-white">
-                        Series populares
-                    </Text>
-                    <View className="flex-row gap-2 w-full mt-2">
-                        <View className="bg-red-400 w-20 h-40 rounded" />
-                        <View className="bg-red-400 w-20 h-40 rounded" />
-                        <View className="bg-red-400 w-20 h-40 rounded" />
-                    </View>
-                </View>
+
+                {!isSearching ? (<HomeStart movie={dataMovie} serie={dataSerie} />) : (<HomeSearch data={dataSearch} />)}
+                
             </ScrollView>
             <StatusBar style="auto" />
         </View>

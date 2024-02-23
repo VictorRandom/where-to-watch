@@ -47,3 +47,14 @@ export const fetchDetailMovie = async (movieId: number) => {
         return error;
     }
 }
+
+export const fetchProviderMovie = async (movieId: number) => {
+    try {
+        const response = await axios.get(
+            `${baseURL}/movie/${movieId}/watch/providers?api_key=${REACT_APP_API_KEY}&language=pt-br`
+        )
+        return response.data;
+    } catch (error) {
+        return error;
+    }
+}

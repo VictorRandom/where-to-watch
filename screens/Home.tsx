@@ -2,15 +2,16 @@ import { useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { TouchableOpacity, ScrollView, Text, TextInput, View } from 'react-native';
 import { fetchFilterMovie, fetchPopularMovies } from '../services/movies';
-import { fetchPopularSeries } from '../services/series';
+import { fetchFilterSerie, fetchPopularSeries } from '../services/series';
 import HomeStart from './HomeStart';
 import HomeSearch from './HomeSearch';
 
-export default function Home() {
+export default function Home({ navigation }) {
     const [text, setText] = useState('');
     const [dataMovie, setDataMovie] = useState([]);
     const [dataSerie, setDataSerie] = useState([]);
-    const [dataSearch, setDataSearch] = useState([]);
+    const [dataSearchMovie, setDataSearchMovie] = useState([]);
+    const [dataSearchSerie, setDataSearchSerie] = useState([]);
     const [isSearching, setIsSearching] = useState(false);
     const [loading, setLoading] = useState(false);
 
@@ -32,12 +33,18 @@ export default function Home() {
 
     const fetchData = async () => {
         try {
-            const result = await fetchFilterMovie(text);
-            setDataSearch(result);
+            const resultMovie = await fetchFilterMovie(text);
+            const resultSerie = await fetchFilterSerie(text);
+            setDataSearchMovie(resultMovie);
+            setDataSearchSerie(resultSerie);
             setIsSearching(true);
         } catch (error) {
             console.log(error)
         }
+    }
+
+    if(loading) {
+        return <></>
     }
 
     return (
@@ -56,7 +63,7 @@ export default function Home() {
                     </TouchableOpacity>
                 </View>
 
-                {loading ? <></> : !isSearching ? (<HomeStart movie={dataMovie} serie={dataSerie} />) : (<HomeSearch data={dataSearch} />)}
+                {!isSearching ? (<HomeStart movie={dataMovie} serie={dataSerie} />) : (<HomeSearch navigation={navigation} dataMovie={dataSearchMovie} dataSerie={dataSearchSerie} />)}
                 
             </ScrollView>
             <StatusBar style="auto" />

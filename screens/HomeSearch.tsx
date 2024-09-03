@@ -11,8 +11,6 @@ export default function HomeSearch(props:any) {
     const listSearchMovie = dataMovie?.results;
     const listSearchSerie= dataSerie?.results;
 
-    console.log(navigation)
-
     return (
         <View>
             {listSearchMovie.length > 0 ? (

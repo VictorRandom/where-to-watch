@@ -6,7 +6,7 @@ import { fetchFilterSerie, fetchPopularSeries } from '../services/series';
 import HomeStart from './HomeStart';
 import HomeSearch from './HomeSearch';
 
-export default function Home({ navigation }) {
+export default function Home({ navigation }: { navigation: any }) {
     const [text, setText] = useState('');
     const [dataMovie, setDataMovie] = useState([]);
     const [dataSerie, setDataSerie] = useState([]);
@@ -25,7 +25,7 @@ export default function Home({ navigation }) {
                 setDataSerie(resultSerie);
                 setLoading(false);
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         }
         fetchResult();
@@ -39,7 +39,7 @@ export default function Home({ navigation }) {
             setDataSearchSerie(resultSerie);
             setIsSearching(true);
         } catch (error) {
-            console.log(error)
+            console.error(error)
         }
     }
 

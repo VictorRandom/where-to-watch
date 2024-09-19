@@ -25,3 +25,25 @@ export const fetchFilterSerie = async (filter: string) => {
         return error;
     }
 }
+
+export const fetchDetailSerie = async (serieId: number) => {
+    try {
+        const response = await axios.get(
+            `${baseURL}/tv/${serieId}?api_key=${REACT_APP_API_KEY}&language=pt-br`
+        )
+        return response.data;
+    } catch (error) {
+        return error;
+    }
+}
+
+export const fetchProviderSerie = async (serieId: number) => {
+    try {
+        const response = await axios.get(
+            `${baseURL}/tv/${serieId}/watch/providers?api_key=${REACT_APP_API_KEY}&language=pt-br`
+        )
+        return response.data;
+    } catch (error) {
+        return error;
+    }
+}

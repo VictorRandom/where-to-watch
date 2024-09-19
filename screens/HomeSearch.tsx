@@ -38,7 +38,7 @@ export default function HomeSearch(props:any) {
                     </Text>
                     <ScrollView horizontal className="flex-row gap-2 w-full mt-2">
                         {listSearchSerie?.map((serie: Serie) => (
-                            <TouchableOpacity className="flex-col" key={serie.id} onPress={() => {console.log(serie.id)}}>
+                            <TouchableOpacity className="flex-col" key={serie.id} onPress={() => navigation.navigate(PATHS.SERIE_DETAIL, { data: serie.id })}>
                                 <Image
                                     style={{ width: 100, height: 150, borderRadius: 10 }}
                                     source={{ uri: `https://image.tmdb.org/t/p/w500${serie.poster_path}` }}

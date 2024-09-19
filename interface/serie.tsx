@@ -13,4 +13,10 @@ export interface Serie {
     poster_path: string;
     vote_average: number;
     vote_count: number;
+    genres: Genre[];
+}
+
+interface Genre {
+    id: number,
+    name: string;
 }

@@ -28,9 +28,6 @@ export default function MovieDetail({ route }: { route: any }) {
         fetchResult();
     }, []);
 
-    // console.log(movie);
-    console.log(providers)
-
     return (
         <ScrollView className="flex-1 bg-gray-900">
             <View className="p-2">
@@ -45,81 +42,66 @@ export default function MovieDetail({ route }: { route: any }) {
                 </Text>
                 <Text className="text-white text-base my-2">{movie?.overview}</Text>
 
-                <View className="flex-row items-center mb-5">
-                    <Text className="text-white mb-2 rotate-90">Comprar: </Text>
-                    <View className="flex-col mb-2.5">
-                        {providers?.buy?.map((buy) => (
-                            <View className="flex-row items-center mb-2.5">
-                                <Image
-                                    style={{ width: 50, height: 50 }}
-                                    source={{ uri: `https://image.tmdb.org/t/p/w500${buy.logo_path}` }}
-                                    resizeMode="contain"
-                                />
-                                <Text className="text-white">{buy.provider_name}</Text>
-                            </View>
-                        ))}
-                    </View>
-                </View>
-
-                <View className="flex-row items-center mb-5">
-                    <Text className="text-white mb-2 rotate-90">Assinatura: </Text>
-                    <View className="flex-col mb-2.5">
-                        {providers?.flatrate?.map((flatrate) => (
-                            <View className="flex-row items-center mb-2.5">
-                                <Image
-                                    style={{ width: 50, height: 50 }}
-                                    source={{ uri: `https://image.tmdb.org/t/p/w500${flatrate.logo_path}` }}
-                                    resizeMode="contain"
-                                />
-                                <Text className="text-white">{flatrate.provider_name}</Text>
-                            </View>
-                        ))}
-                    </View>
-                </View>
-
-                <View className="flex-row items-center mb-5">
-                    <Text className="text-white mb-2 rotate-90">Alugar: </Text>
-                    <View className="flex-col mb-2.5">
-                        {providers?.flatrate?.map((rent) => (
-                            <View className="flex-row items-center mb-2.5">
-                                <Image
-                                    style={{ width: 50, height: 50 }}
-                                    source={{ uri: `https://image.tmdb.org/t/p/w500${rent.logo_path}` }}
-                                    resizeMode="contain"
-                                />
-                                <Text className="text-white">{rent.provider_name}</Text>
-                            </View>
-                        ))}
-                    </View>
-                </View>
-
-                {/* <Text className="text-white">
-                    Assinatura:
-                    {providers?.flatrate?.map((flatrate) => (
-                        <View className="flex-row items-center mb-2.5">
-                            <Image
-                                style={{ width: 50, height: 50 }}
-                                source={{ uri: `https://image.tmdb.org/t/p/w500${flatrate.logo_path}` }}
-                                resizeMode="contain"
-                            />
-                            <Text className="text-white">{flatrate.provider_name}</Text>
+                {providers?.flatrate && (
+                    <View className="flex-row items-center mb-5">
+                        <Text className="text-white mb-2 rotate-90">Comprar: </Text>
+                        <View className="flex-col mb-2.5">
+                            {providers?.buy?.map((buy) => (
+                                <View className="flex-row items-center mb-2.5">
+                                    <Image
+                                        style={{ width: 50, height: 50 }}
+                                        source={{ uri: `https://image.tmdb.org/t/p/w500${buy.logo_path}` }}
+                                        resizeMode="contain"
+                                    />
+                                    <Text className="text-white">{buy.provider_name}</Text>
+                                </View>
+                            ))}
                         </View>
-                    ))}
-                </Text> */}
-{/* 
-                <Text className="text-white">
-                    Alugar: 
-                    {providers?.rent?.map((rent) => (
-                        <View className="flex-row items-center mb-2.5">
-                            <Image
-                                style={{ width: 50, height: 50 }}
-                                source={{ uri: `https://image.tmdb.org/t/p/w500${rent.logo_path}` }}
-                                resizeMode="contain"
-                            />
-                            <Text className="text-white">{rent.provider_name}</Text>
-                        </View>                
-                    ))}
-                </Text> */}
+                    </View>
+                )}
+
+                {providers?.flatrate && (
+                    <View className="flex-row items-center mb-5">
+                        <Text className="text-white mb-2 rotate-90">Assinatura: </Text>
+                        <View className="flex-col mb-2.5">
+                            {providers?.flatrate?.map((flatrate) => (
+                                <View className="flex-row items-center mb-2.5">
+                                    <Image
+                                        style={{ width: 50, height: 50 }}
+                                        source={{ uri: `https://image.tmdb.org/t/p/w500${flatrate.logo_path}` }}
+                                        resizeMode="contain"
+                                    />
+                                    <Text className="text-white">{flatrate.provider_name}</Text>
+                                </View>
+                            ))}
+                        </View>
+                    </View>
+                )}
+
+                {providers?.rent && (
+                    <View className="flex-row items-center mb-5">
+                        <Text className="text-white mb-2 rotate-90">Alugar: </Text>
+                        <View className="flex-col mb-2.5">
+                            {providers?.flatrate?.map((rent) => (
+                                <View className="flex-row items-center mb-2.5">
+                                    <Image
+                                        style={{ width: 50, height: 50 }}
+                                        source={{ uri: `https://image.tmdb.org/t/p/w500${rent.logo_path}` }}
+                                        resizeMode="contain"
+                                    />
+                                    <Text className="text-white">{rent.provider_name}</Text>
+                                </View>
+                            ))}
+                        </View>
+                    </View>
+                )}
+                    
+
+                {!providers?.buy && !providers?.flatrate && !providers?.rent && (
+                    <View>
+                        <Text className="text-red-700 text-center">Nenhuma plataforma está transmitindo</Text>
+                    </View>
+                )}
                 
             </View>
             <StatusBar style="auto" />

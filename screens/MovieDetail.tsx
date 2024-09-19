@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { Image, Text, View } from 'react-native';
+import { Image, ScrollView, Text, View } from 'react-native';
 import { fetchDetailMovie, fetchProviderMovie } from '../services/movies';
 import { Movie } from '../interface/movie';
 import { Provider } from '../interface/provider';
@@ -28,51 +28,101 @@ export default function MovieDetail({ route }: { route: any }) {
         fetchResult();
     }, []);
 
-    console.log(movie);
+    // console.log(movie);
     console.log(providers)
 
     return (
-        <View className="flex-1 bg-gray-900">
-             <Image
-                style={{ width: 100, height: 150, borderRadius: 10 }}
-                source={{ uri: `https://image.tmdb.org/t/p/w500${movie?.poster_path}` }}
-            />
-            <Text className="text-white">{movie?.title}</Text>
-            <Text className="text-white">
-                {movie?.genres?.map((genre) => genre.name).join(', ')}
-            </Text>
-            <Text className="text-white">{movie?.overview}</Text>
-            <Text className="text-white">
-                Comprar:
-                {providers?.buy?.map((buy) => (
-                    <Image
-                        style={{ width: 100, height: 100, marginRight: 10 }}
-                        source={{ uri: `https://image.tmdb.org/t/p/original${buy.logo_path}` }}
-                        resizeMode="contain"
-                    />
-                ))}
-            </Text>
-            <Text className="text-white">
-                Assinatura:
-                {providers?.flatrate?.map((flatrate) => (
-                    <Image
-                        style={{ width: 100, height: 100, marginRight: 10 }}
-                        source={{ uri: `https://image.tmdb.org/t/p/original${flatrate.logo_path}` }}
-                        resizeMode="contain"
-                    />
-                ))}
-            </Text>
-            <Text className="text-white">
-                Alugar: 
-                {providers?.rent?.map((rent) => (
-                    <Image
-                        style={{ width: 100, height: 100, marginRight: 10 }}
-                        source={{ uri: `https://image.tmdb.org/t/p/original${rent.logo_path}` }}
-                        resizeMode="contain"
-                    />                    
-                ))}
-            </Text>
+        <ScrollView className="flex-1 bg-gray-900">
+            <View className="p-2">
+                <Image
+                    className="mx-auto my-10"
+                    style={{ width: 100, height: 150, borderRadius: 10 }}
+                    source={{ uri: `https://image.tmdb.org/t/p/w500${movie?.poster_path}` }}
+                />
+                <Text className="text-white text-3xl text-center">{movie?.title}</Text>
+                <Text className="text-gray-500 text-xs text-center">
+                    {movie?.genres?.map((genre) => genre.name).join(', ')}
+                </Text>
+                <Text className="text-white text-base my-2">{movie?.overview}</Text>
+
+                <View className="flex-row items-center mb-5">
+                    <Text className="text-white mb-2 rotate-90">Comprar: </Text>
+                    <View className="flex-col mb-2.5">
+                        {providers?.buy?.map((buy) => (
+                            <View className="flex-row items-center mb-2.5">
+                                <Image
+                                    style={{ width: 50, height: 50 }}
+                                    source={{ uri: `https://image.tmdb.org/t/p/w500${buy.logo_path}` }}
+                                    resizeMode="contain"
+                                />
+                                <Text className="text-white">{buy.provider_name}</Text>
+                            </View>
+                        ))}
+                    </View>
+                </View>
+
+                <View className="flex-row items-center mb-5">
+                    <Text className="text-white mb-2 rotate-90">Assinatura: </Text>
+                    <View className="flex-col mb-2.5">
+                        {providers?.flatrate?.map((flatrate) => (
+                            <View className="flex-row items-center mb-2.5">
+                                <Image
+                                    style={{ width: 50, height: 50 }}
+                                    source={{ uri: `https://image.tmdb.org/t/p/w500${flatrate.logo_path}` }}
+                                    resizeMode="contain"
+                                />
+                                <Text className="text-white">{flatrate.provider_name}</Text>
+                            </View>
+                        ))}
+                    </View>
+                </View>
+
+                <View className="flex-row items-center mb-5">
+                    <Text className="text-white mb-2 rotate-90">Alugar: </Text>
+                    <View className="flex-col mb-2.5">
+                        {providers?.flatrate?.map((rent) => (
+                            <View className="flex-row items-center mb-2.5">
+                                <Image
+                                    style={{ width: 50, height: 50 }}
+                                    source={{ uri: `https://image.tmdb.org/t/p/w500${rent.logo_path}` }}
+                                    resizeMode="contain"
+                                />
+                                <Text className="text-white">{rent.provider_name}</Text>
+                            </View>
+                        ))}
+                    </View>
+                </View>
+
+                {/* <Text className="text-white">
+                    Assinatura:
+                    {providers?.flatrate?.map((flatrate) => (
+                        <View className="flex-row items-center mb-2.5">
+                            <Image
+                                style={{ width: 50, height: 50 }}
+                                source={{ uri: `https://image.tmdb.org/t/p/w500${flatrate.logo_path}` }}
+                                resizeMode="contain"
+                            />
+                            <Text className="text-white">{flatrate.provider_name}</Text>
+                        </View>
+                    ))}
+                </Text> */}
+{/* 
+                <Text className="text-white">
+                    Alugar: 
+                    {providers?.rent?.map((rent) => (
+                        <View className="flex-row items-center mb-2.5">
+                            <Image
+                                style={{ width: 50, height: 50 }}
+                                source={{ uri: `https://image.tmdb.org/t/p/w500${rent.logo_path}` }}
+                                resizeMode="contain"
+                            />
+                            <Text className="text-white">{rent.provider_name}</Text>
+                        </View>                
+                    ))}
+                </Text> */}
+                
+            </View>
             <StatusBar style="auto" />
-        </View>
+        </ScrollView>
     );
 }

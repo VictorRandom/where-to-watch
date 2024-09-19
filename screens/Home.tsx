@@ -63,7 +63,7 @@ export default function Home({ navigation }: { navigation: any }) {
                     </TouchableOpacity>
                 </View>
 
-                {!isSearching ? (<HomeStart movie={dataMovie} serie={dataSerie} />) : (<HomeSearch navigation={navigation} dataMovie={dataSearchMovie} dataSerie={dataSearchSerie} />)}
+                {!isSearching ? (<HomeStart navigation={navigation} movie={dataMovie} serie={dataSerie} />) : (<HomeSearch navigation={navigation} dataMovie={dataSearchMovie} dataSerie={dataSearchSerie} />)}
                 
             </ScrollView>
             <StatusBar style="auto" />
